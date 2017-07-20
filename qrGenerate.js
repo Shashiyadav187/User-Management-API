@@ -1,27 +1,65 @@
-var username, email, form_url;
+var username, email, form_url, jsobj;
+
+var app = angular.module('myApp', []);
+app.controller('MainCtrl', [
+    '$scope',
+    function($scope) {}
+]);
 
 $(document).ready(function() {
     $("#print").hide();
     $("#barcode").hide();
+    $(".btn-danger").hide();
+    $(".invalid-login").hide();
 
+    //login page
     $("#submit").click(function() {
+        //values
         username = $("#username").val();
         email = $("#email").val();
-        /*form_url = "https://docs.google.com/forms/d/e/1FAIpQLSdlieL-MueTJYpfIqZk2JWTjVnINterPEHgRxUISu-aL7DbJA/formResponse?usp=pp_url&entry.920234751=" + username + "&entry.406371071=" + email;
-        form_url = encodeURI(form_url);
-        console.log(form_url);
-        
-        $("#print").attr("href", form_url);*/
-        $("#print").text("username: "+username+" email: "+email);
-        $("#print").show();
+        var login_success = true;
 
-        /*var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + "https://goo.gl/dAGny3" + '&amp;size=50x50';*/
-        
-        var output = "username = "+username+" email = "+email;
+        //validate login
+        $.getJSON('users.json', function(data) {
+            data = $.parseJSON('data');
+        });
 
-        var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + output + '&amp;size=50x50';
+        if (login_success) {
+            // generates 7-digit random number - serves as a auth. code
+            var secret = Math.floor((Math.random() * Math.pow(10, 17)) + 1).toString(36);
+            console.log(secret);
 
-        $('#barcode').attr('src', url);
-        $("#barcode").show();
+            //regular
+            var output = "<p>username = " + username + "<br>email = " + email + "<br>code = " + secret + "</p>";
+            //JSON
+            //var output = '"username":"username","email":"email","code":"secret"';
+
+            $("#print").html(output);
+            $("#print").show();
+
+            var url = 'https://api.qrserver.com/v1/create-qr-code/?data=' + output + '&amp;size=50x50';
+
+            $('#barcode').attr('src', url);
+            $("#barcode").show();
+        } else {
+            //if incorrect
+            $(".invalid-login").show();
+        }
+    });
+
+    //sign up page
+    $("#signUp").click(function() {
+        //values
+        username = $("#username").val();
+        email = $("#email").val();
+        var url = 'http://localhost:8080/?name=' + username + '&email=' + email;
+
+        $("#finalSubmit").attr("href", url);
+        $(".btn-danger").fadeIn();
+
+    });
+
+    $(".btn-danger").click(function() {
+        $(this).fadeOut();
     });
 });
