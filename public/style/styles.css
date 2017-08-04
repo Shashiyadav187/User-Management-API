@@ -1,0 +1,41 @@
+body{
+	background-image: url("images/bkground.png");
+}
+
+*{
+	color:white;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.navbar {
+    width: 100%;
+    border-radius: 0px;
+    margin-top: 20px;
+    box-shadow: 0px 5px 20px 5px rgba(255,255,255,0.3);
+	background-color: rgba(34,34,34,0.8);
+}
+
+.btn-success{
+	color:#333;
+}
+
+#login-linkedin{
+	margin: 10px;
+}
+
+.btn{
+	color:#0077b5;
+	padding: 15px 20px;
+}
+
+.btn:hover{
+	background-color: #0077b5;
+	color:white;
+}
+
+.btn-success{
+	color:white;
+}

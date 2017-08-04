@@ -2,11 +2,12 @@
 <html>
 
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/styles.css" media="screen">
+    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/styles.css" media="screen">
 </head>
 
 <body>
@@ -17,22 +18,22 @@
                 <a class="navbar-brand" href="http://techundertwenty.com/" target="_new">TU20</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="http://127.0.0.1:3000/login">Login</a></li>
-                <li class="active"><a href="">Register</a></li>
+                <li class="active"><a href="">Login</a></li>
+                <li><a href="http://127.0.0.1:3000/">Register</a></li>
             </ul>
         </div>
     </nav>
     <div class="container">
-        <form method="post" action="/adduser">
-            <h1>Register</h1>
-            <p>Remember to use the same email address as your LinkedIn account</p>
-            <hr>
-            <input type="text" name="name" class="form-control" placeholder="Full Name" required>
-            <input type="email" name="email" class="form-control" placeholder="Email (associated with LinkedIn account)" required>
-            <input type="password" name="password" class="form-control" placeholder="Password" required>
-            <!-- <input type="submit"> -->
-            <button type="submit" class="btn btn-success">Register</button>
-        </form>
+        <h1>Login</h1>
+        <p>Login using your LinkedIn account.</p>
+        <br>
+        <a href="https://www.linkedin.com/start/join"><button class="btn">Register for LinkedIn</button></a>
+        <a href="/auth/linkedin">
+            <button class="btn" id="login-linkedin">Login with LinkedIn</button>
+        </a>
+        <a href="/showusers" target="_new" id="show_all_users">
+            <button class="btn" id="show-users">Show all users</button>
+        </a>
     </div>
 </body>
 
