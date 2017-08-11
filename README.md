@@ -1,2 +1,4 @@
-# TU20signIn
-This is repo. contains the files needed to create the sign in page for TU20 users and administrators.
+# Sign in and Registration Web API
+Simple web api to manage and create users
+
+Made with MEAN Stack
