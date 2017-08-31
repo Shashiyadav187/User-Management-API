@@ -34,65 +34,29 @@ app.get("/", (req, res) => {
     res.sendFile(__dirname + "/test.html")
 })
 
-var email_global
 var fe_data
 app.post("/adduser", (req, res) => {
     fe_data = new User(req.body)
-    email_global = fe_data.email
+    var email = fe_data.email
     fe_data.save()
-
-    // var userArr = []
-    // User.find({}, (err, users) => {
-    //     var userMap = {};
-    //     var numOfUsers = 0;
-
-    //     userArr = []
-
-    //     users.forEach((user) => {
-    //         userMap[user._id] = user;
-    //         userArr.push(user.email)
-    //         numOfUsers++;
-    //     })
-    //     after(numOfUsers)
-    // })
-
-
-    // function after(numOfUsers_param) {
-    //     var email_exists = false
-    //     for (var i = 0; i < numOfUsers_param; i++) {
-    //         if (userArr[i] == email_global) {
-    //             email_exists = true;
-    //             break
-    //         }
-    //     }
-
-
-    //     if(fe_data.bio==""){
-    //         res.redirect("/")
-    //     }
-
-    //     if (email_exists) {
-    //         //webmaster
-    //         if (email_global == webmaster) {
-    //             res.redirect("/edit_users_table")
-    //         } else {
-    //             res.redirect("/showusers")
-    //         }
-    //     } else {
-    //         fe_data.save()
-    //         res.redirect("/showusers")
-    //     }
-    // }
-
-    res.redirect("/registered")
+    if (email == webmaster) {
+        res.redirect("/registered?email=" + webmaster)
+    } else {
+        res.redirect("/registered")
+    }
 })
 
 app.get("/registered", (req, res) => {
-    res.sendFile(__dirname + "/registered.html")
+    var req_email = req.query.email
+    if (req_email == webmaster) {
+        res.sendFile(__dirname + "/registered_master.html")
+    } else {
+        res.sendFile(__dirname + "/registered.html")
+    }
 })
 
-app.get("/register", (req,res)=>{
-    res.sendFile(__dirname+"/test.html")
+app.get("/register", (req, res) => {
+    res.sendFile(__dirname + "/test.html")
 })
 
 app.get("/checkEmail", (req, res) => {
@@ -124,14 +88,11 @@ app.get("/checkEmail", (req, res) => {
         if (email_exists) {
             //webmaster
             if (req_email == webmaster) {
-                console.log(1)
                 res.redirect("/edit_users_table")
             } else {
-                console.log(2)
                 res.redirect("/showusers")
             }
         } else {
-            console.log(3)
             res.redirect("/register")
         }
     }
@@ -240,28 +201,13 @@ app.get("/edit_users_table", (req, res) => {
             for (var y = 0; y < 4; y++) {
                 if (y == 0) {
                     html += "<td><img src='" + userArr[y][i] + "' alt='Profile Picture'</td>";
-                }
-                /*else if (y == 2 && userArr[y][i] == webmaster) {
-                                   disabled_functions == true
-                               }*/
-                else {
+                } else {
                     html += "<td>" + userArr[y][i] + "</td>";
                 }
             }
-            //html += "<td>True</td>"; //add admin functionality
-            // html+="<td><a href='/delete/?email="+userArr[i][4]+"'>Delete</a></td>";                    //add delete functionality
-            // html+="<td><a href='/promote/?email="+userArr[i][4]+">Promote</a></td>";                //add promotion functionality
-            // if (!disabled_functions) {
-            //     html += "<td><a class='btn btn-danger disabled' href='/delete/?email=" + userArr[2][i] + "'>Delete</a></td>";
-            //     html += "<td><a class='btn btn-success disabled' href='/promote/?email=" + userArr[2][i] + "''>Promote</a></td>";
-            // } else {
-            // html += "<td><a class='btn btn-danger' href='/delete/?email=" + userArr[2][i] + "'>Delete</a></td>";
-            // html += "<td><a class='btn btn-success' href='/promote/?email=" + userArr[2][i] + "''>Promote</a></td>";
-            // }
             html += "<td><a class='btn btn-danger' href='/delete/?email=" + userArr[2][i] + "'>Delete</a></td>";
             html += "<td><a class='btn btn-success' href='/promote/?email=" + userArr[2][i] + "''>Promote</a></td>";
             html += "</tr>";
-
         }
 
         html += "</table></body></html>";
@@ -269,3 +215,5 @@ app.get("/edit_users_table", (req, res) => {
         res.send(html)
     })
 })
+
+app.delete("/delete")
